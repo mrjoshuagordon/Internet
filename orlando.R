@@ -1,4 +1,4 @@
-setwd("/Users/Joshua/Desktop/Internet")
+setwd("/Users/Joshua/Desktop/Internet/Internet")
 
 library(maps)
 map('state', region="florida")
@@ -32,14 +32,24 @@ lines(x.bottom, y.new, lty=2, col="red")
 
 answer = c()
 for(i in 1:length(x.bottom)){
-answer= c(answer, which(zipcode$latitude < max(y.new) & zipcode$latitude > min(y.new) & zipcode$longitude < x.bottom[i] & zipcode$longitude > x.top[i]))
+answer= c(answer, which(zipcode$latitude < max(y.new) & zipcode$latitude > min(y.new)))
 }
 
-new.zipcode = zipcode[answer,]
+new.zipcode = zipcode[unique(answer),]
 
-nzc = new.zipcode
+answer1 = c()
+
+for(i in 1:length(x.bottom)){
+  answer1 = c(answer1, which(  (x.top[i] > new.zipcode$longitude &  new.zipcode$longitude > x.bottom[i] 
+                                & new.zipcode$latitude < y.new[i]+.2 & new.zipcode$latitude > y.new[i]-.2 ) ) )
+}
+
+
+nzc = new.zipcode[unique(answer1),]
 
 points(nzc$longitude, nzc$latitude, col="green")
 
 
+final.answer = nzc
 
+head(final.answer)
