@@ -1,9 +1,10 @@
 setwd("/Users/Joshua/Desktop/Internet/Internet")
 
 library(maps)
-map('state', region="florida")
-
-orlando = c(28.37,-81.5568)
+#map('state', region="florida")
+map('state')
+orlando = c(47.6097, -122.3331) 
+#orlando = c(28.37,-81.5568)
 miami = c(25.6132,-80.3474)
 
 points(orlando[2], orlando[1], col="red", cex=1, pch=16)
@@ -32,16 +33,24 @@ lines(x.bottom, y.new, lty=2, col="red")
 
 answer = c()
 for(i in 1:length(x.bottom)){
-answer= c(answer, which(zipcode$latitude < max(y.new) & zipcode$latitude > min(y.new)))
+answer= c(answer, )
 }
 
-new.zipcode = zipcode[unique(answer),]
+new.zipcode = zipcode[which(zipcode$latitude < max(y.new) & zipcode$latitude > min(y.new)),]
+
+
+#new.zipcode = zipcode[unique(answer),] 
+
 
 answer1 = c()
 
 for(i in 1:length(x.bottom)){
   answer1 = c(answer1, which(  (x.top[i] > new.zipcode$longitude &  new.zipcode$longitude > x.bottom[i] 
                                 & new.zipcode$latitude < y.new[i]+.2 & new.zipcode$latitude > y.new[i]-.2 ) ) )
+    if(i %% 100 == 0){
+   print(i)
+  }
+  
 }
 
 
